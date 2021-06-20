@@ -1054,7 +1054,7 @@ install_certificate() {
   need_ppa certbot-ubuntu-certbot-bionic.list ppa:certbot/certbot 75BCA694 7BF5
   apt-get -y install certbot
 
-  certbot certonly --standalone --non-interactive --preferred-challenges http \
+  certbot certonly --manual --non-interactive --preferred-challenges dns \
     --deploy-hook "systemctl restart coturn" \
     -d $HOST --email $EMAIL --agree-tos -n
 }
@@ -1066,7 +1066,7 @@ install_coturn() {
 
   need_pkg software-properties-common certbot
 
-  if ! certbot certonly --standalone --non-interactive --preferred-challenges http \
+  if ! certbot certonly --manual --non-interactive --preferred-challenges dns \
          -d $COTURN_HOST --email $EMAIL --agree-tos -n ; then
      err "Let's Encrypt SSL request for $COTURN_HOST did not succeed - exiting"
   fi
